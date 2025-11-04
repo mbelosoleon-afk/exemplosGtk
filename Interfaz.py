@@ -21,7 +21,12 @@ class Interfaz(Gtk.Window):
         panel.add(caixaH)
         trvLista = Gtk.TreeView()
         trvLista.set_model(modeloLista)
+        celda = Gtk.CellRendererText ()
+        columna = Gtk.TreeViewColumn ("Elemento", celda, text= 0)
+        trvLista.append_column(columna)
         caixaH.pack_start(trvLista, True, True, 2)
+
+
         caixaV = Gtk.Box (orientation = Gtk.Orientation.VERTICAL, spacing = 4)
         caixaH.pack_start(caixaV, True, True, 2)
         rbt1 = Gtk.RadioButton(label = "RadioButton1")
@@ -32,6 +37,8 @@ class Interfaz(Gtk.Window):
         caixaV.pack_start(rbt1, False, False, 2)
         caixaV.pack_start(rbt2, False, False, 2)
         caixaV.pack_start(rbt3, False, False, 2)
+        btnBoton = Gtk.Button(label = "Boton")
+        caixaV.pack_end(btnBoton, False, False, 2)
 
         self.add(panelC)
         self.connect("delete-event", Gtk.main_quit)
