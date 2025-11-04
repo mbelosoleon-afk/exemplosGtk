@@ -51,7 +51,9 @@ class Interfaz(Gtk.Window):
         caixaV2 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 2)
         chk1 = Gtk.CheckButton(label="Caixa non seleccionada")
         chk2 = Gtk.CheckButton(label="Caixa seleccionada")
+        chk2.set_active(True)
         chk3 = Gtk.CheckButton(label="Caixa inactiva")
+        chk3.set_sensitive(False)
         scl1 = Gtk.Scale(orientation = Gtk.Orientation.HORIZONTAL)
         caixaV2.pack_start(chk1, False, False, 2)
         caixaV2.pack_start(chk2, False, False, 2)
@@ -60,6 +62,24 @@ class Interfaz(Gtk.Window):
         carpeta.append_page(caixaV2, Gtk.Label(label="Solapa seleccionada"))
         carpeta.append_page(Gtk.TextView(), Gtk.Image.new_from_icon_name("help-about", Gtk.IconSize.MENU))
 
+        caixaV3 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+        txtCaixaTexto = Gtk.Entry()
+        txtCaixaPassw = Gtk.Entry()
+        txtCaixaPassw.set_invisible_char('*')
+        txtCaixaPassw.set_visibility(False)
+        cmbCombo = Gtk.ComboBox()
+        cmbCombo.set_model(modeloLista)
+        celda2 = Gtk.CellRendererText()
+        cmbCombo.pack_start(celda2, True)
+        cmbCombo.add_attribute(celda2, "text", 0)
+        caixaV3.pack_start(txtCaixaTexto, True, True, 2)
+        caixaV3.pack_start(txtCaixaPassw, True, True, 2)
+        caixaV3.pack_start(cmbCombo, True, True, 2)
+
+        maia.attach_next_to(caixaV3, panel, Gtk.PositionType.BOTTOM, 1, 1)
+
+        txvCaixaTexto = Gtk.TextView()
+        maia.attach_next_to(txvCaixaTexto, carpeta, Gtk.PositionType.BOTTOM, 1, 1)
 
 
 
