@@ -1,4 +1,6 @@
 import gi
+from gi.repository.IBus import Orientation
+
 gi.require_version("Gtk","3.0")
 from gi.repository import Gtk, Gdk, GObject
 
@@ -11,6 +13,10 @@ class Interfaz(Gtk.Window):
         modeloLista.append(('Elemento 1',))
         modeloLista.append(('Elemento 2',))
         modeloLista.append(('Elemento 3',))
+        modeloLista.append(('Elemento 4',))
+        modeloLista.append(('Elemento 5',))
+        modeloLista.append(('Elemento 6',))
+
 
         panelC = Gtk.Frame (label = "PanelCaption")
         maia = Gtk.Grid ()
@@ -39,6 +45,23 @@ class Interfaz(Gtk.Window):
         caixaV.pack_start(rbt3, False, False, 2)
         btnBoton = Gtk.Button(label = "Boton")
         caixaV.pack_end(btnBoton, False, False, 2)
+
+        carpeta = Gtk.Notebook()
+        maia.attach_next_to(carpeta, panel, Gtk.PositionType.RIGHT,1, 1)
+        caixaV2 = Gtk.Box(orientation = Gtk.Orientation.VERTICAL, spacing = 2)
+        chk1 = Gtk.CheckButton(label="Caixa non seleccionada")
+        chk2 = Gtk.CheckButton(label="Caixa seleccionada")
+        chk3 = Gtk.CheckButton(label="Caixa inactiva")
+        scl1 = Gtk.Scale(orientation = Gtk.Orientation.HORIZONTAL)
+        caixaV2.pack_start(chk1, False, False, 2)
+        caixaV2.pack_start(chk2, False, False, 2)
+        caixaV2.pack_start(chk3, False, False, 2)
+        caixaV2.pack_end(scl1, False, False, 2)
+        carpeta.append_page(caixaV2, Gtk.Label(label="Solapa seleccionada"))
+        carpeta.append_page(Gtk.TextView(), Gtk.Image.new_from_icon_name("help-about", Gtk.IconSize.MENU))
+
+
+
 
         self.add(panelC)
         self.connect("delete-event", Gtk.main_quit)
