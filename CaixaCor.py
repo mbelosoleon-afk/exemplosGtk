@@ -1,3 +1,4 @@
+#Hay que tener instalado los imports de GTK Y GDK
 import gi
 gi.require_version("Gtk","3.0")
 from gi.repository import Gtk, Gdk, GObject
@@ -5,8 +6,8 @@ from gi.repository import Gtk, Gdk, GObject
 class CaixaCor (Gtk.DrawingArea):
     def __init__(self,color):
         super().__init__()
-        self.set_size_request(50,50)
-        rgba = Gdk.RGBA() #RGBA r=0.0, g=0.0, b=0.0, a=1.0
+        self.set_size_request(50,50) #Tamaño del DrawingArea
+        rgba = Gdk.RGBA() #Crea un objeto RGBA para los colores (r=0.0, g=0.0, b=0.0, a=1.0)
         print(rgba)
         rgba.parse(color)
         self.color = rgba
