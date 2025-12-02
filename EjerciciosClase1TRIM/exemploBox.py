@@ -1,7 +1,8 @@
 import gi
 import CaixaCor
 gi.require_version("Gtk","3.0")
-from gi.repository import Gtk, Gdk, GObject
+from gi.repository import Gtk
+
 
 class ExemploBoxColor (Gtk.Window):
     def __init__(self):
