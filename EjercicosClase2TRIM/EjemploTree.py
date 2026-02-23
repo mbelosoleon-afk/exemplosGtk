@@ -2,7 +2,6 @@ import  gi
 gi.require_version("Gtk","3.0")
 from gi.repository import Gtk,Gdk,GObject
 
-
 class EjemploTree(Gtk.Window):
     def __init__(self):
         super().__init__()
@@ -22,10 +21,11 @@ class EjemploTree(Gtk.Window):
         for usuario in listaUsuarios:
             modelo.append(usuario)
 
+        modelo.set_sort_func(2, self.compara_edades, None)
         modelo_filtrado = modelo.filter_new()
         modelo_filtrado.set_visible_func(self.filtro_usuarios_edade)
 
-        trvVista = Gtk.TreeView(model=modelo_filtrado)
+        trvVista = Gtk.TreeView(model = modelo)
 
         for i, tituloColumna in enumerate (('Dni','Nome')):
             celda = Gtk.CellRendererText()
@@ -36,6 +36,7 @@ class EjemploTree(Gtk.Window):
 
         celda = Gtk.CellRendererProgress()
         columna = Gtk.TreeViewColumn('Edade',celda, value = 2)
+        columna.set_sort_column_id(2)
         trvVista.append_column(columna)
 
         celda = Gtk.CellRendererText()
@@ -86,6 +87,17 @@ class EjemploTree(Gtk.Window):
         self.filtradoEdade = valor
         modelo_filtrado.refilter()
 
+    def compara_edades(self, modelo, fila1, fila2, datosUsuario):
+        columna_ordear, _ = modelo.get_sort_column_id()
+        edade1 = modelo.get_value(fila1, columna_ordear)
+        edade2 = modelo.get_value(fila2, columna_ordear)
+        if edade1 > edade2:
+            return 1
+        elif edade1 < edade2:
+            return -1
+        elif edade1 == edade2:
+            return 0
+
     def filtro_usuarios_xenero (self, modelo, fila, datos):
         if self.filtradoXenero is None or self.filtradoXenero == "None":
             return True
@@ -95,13 +107,10 @@ class EjemploTree(Gtk.Window):
     def filtro_usuarios_edade (self, modelo, fila, datos):
         return modelo [fila][2] <= self.filtradoEdade
 
-
     def on_xeneroToggled(self, rbtElixido, modelo_filtrado):
         if rbtElixido.get_active():
             self.filtradoXenero = rbtElixido.get_label()
             modelo_filtrado.refilter()
-
-
 
 if __name__ == "__main__":
     EjemploTree()
