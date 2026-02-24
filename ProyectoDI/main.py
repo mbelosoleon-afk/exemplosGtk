@@ -3,9 +3,9 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from ProyectoDI.conexionBD import ConexionBD
-from ProyectoDI.ventana_seleccion import VentanaSeleccion
+from ProyectoDI.ventanaSeleccion import VentanaSeleccion
 
-class AplicacionBiblioteca:
+class Main:
     """
     Clase principal que lanza la ventana principal y hace la conexión con la base de datos
     """
@@ -15,18 +15,18 @@ class AplicacionBiblioteca:
         Inicializa la instancia de la aplicación.
         """
         #Obtener la ruta absoluta de la carpeta donde está este archivo main.py
-        ruta_directorio = os.path.dirname(os.path.abspath(__file__))
-        ruta_db = os.path.join(ruta_directorio, "biblioteca.db")
+        rutaDirectorio = os.path.dirname(os.path.abspath(__file__))
+        rutaDb = os.path.join(rutaDirectorio, "biblioteca.db")
 
         #Configurar conexión a la base de datos
-        self.db = ConexionBD(ruta_db)
+        self.db = ConexionBD(rutaDb)
         self.db.conectaBD()
         self.db.creaCursor()
         self.db.crearTablas()
 
         #Lanzar la ventana de selección
-        self.ventana_inicio = VentanaSeleccion(self.db)
-        self.ventana_inicio.show_all()
+        self.ventanaPrincipal = VentanaSeleccion(self.db)
+        self.ventanaPrincipal.show_all()
 
     def ejecutar(self):
         """
@@ -36,7 +36,7 @@ class AplicacionBiblioteca:
         Gtk.main()
 
 def main():
-    app = AplicacionBiblioteca()
+    app = Main()
     app.ejecutar()
 
 if __name__ == "__main__":

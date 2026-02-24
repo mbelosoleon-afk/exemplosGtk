@@ -26,7 +26,7 @@ class ConexionBD:
         try:
             if self.conexion is None:
                 self.conexion = dbapi.connect(self.rutaBd)
-                # Habilitamos explícitamente el soporte de claves foráneas en SQLite
+                #Habilitamos explícitamente el soporte de claves foráneas en SQLite
                 self.conexion.execute("PRAGMA foreign_keys = ON")
                 print(f"Conexión establecida con {self.rutaBd}")
         except dbapi.StandardError as e:
@@ -48,11 +48,7 @@ class ConexionBD:
     def crearTablas(self):
         """
         Crea las tablas 'autores' y 'libros'.
-
-        Un autor puede tener muchos libros, pero un libro pertenece a un solo autor.
-        La tabla libros incluye restricciones de validación para la puntuación.
         """
-        # Tabla de Autores
         sql_autores = """
         CREATE TABLE IF NOT EXISTS autores (
             id_autor INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,7 +57,6 @@ class ConexionBD:
             biografia TEXT
         )
         """
-        # Tabla de Libros (con Foreign Key)
         sql_libros = """
         CREATE TABLE IF NOT EXISTS libros (
             id_libro INTEGER PRIMARY KEY AUTOINCREMENT,

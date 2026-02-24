@@ -2,8 +2,8 @@ import gi
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
-from ventana_autores import VentanaAutores
-from ventana_libros import VentanaLibros
+from ventanaAutor import VentanaAutores
+from ventanaLibro import VentanaLibros
 
 
 class VentanaSeleccion(Gtk.Window):
