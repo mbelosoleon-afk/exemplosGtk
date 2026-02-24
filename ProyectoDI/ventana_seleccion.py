@@ -110,8 +110,7 @@ class VentanaSeleccion(Gtk.Window):
         ventana.actualizar_listado()
         ventana.present()
 
-"""
-import gi
+"""import gi
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
@@ -148,10 +147,12 @@ class VentanaSeleccion(Gtk.Window):
         # Botón para abrir la sección de libros
         btnLibros = Gtk.Button(label="Libros")
         btnLibros.connect("clicked", lambda x: self.abrir(self.v_libros))
+        btnLibros.get_style_context().add_class("suggested-action")
 
         # Botón para cerrar la aplicación
         btnSalir = Gtk.Button(label="Salir")
         btnSalir.connect("clicked", Gtk.main_quit)
+        btnSalir.get_style_context().add_class("destructive-action")
 
         # Empaquetado de botones
         for b in [btnAutores, btnLibros, btnSalir]:

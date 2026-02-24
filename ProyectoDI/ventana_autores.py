@@ -18,13 +18,13 @@ class DialogoAutor(Gtk.Dialog):
         box.set_spacing(10)
         box.set_border_width(10)
 
-        self.en = Gtk.Entry(text=nombre, placeholder_text="Nombre")
-        self.ena = Gtk.Entry(text=nac, placeholder_text="Nacionalidad")
-        self.tv = Gtk.TextView()
-        self.tv.get_buffer().set_text(bio)
+        self.entry = Gtk.Entry(text=nombre, placeholder_text="Nombre")
+        self.entry2 = Gtk.Entry(text=nac, placeholder_text="Nacionalidad")
+        self.textView = Gtk.TextView()
+        self.textView.get_buffer().set_text(bio)
 
-        for w in [Gtk.Label(label="Nombre:"), self.en, Gtk.Label(label="Nacionalidad:"), self.ena,
-                  Gtk.Label(label="Biografía:"), self.tv]:
+        for w in [Gtk.Label(label="Nombre:"), self.entry, Gtk.Label(label="Nacionalidad:"), self.entry2,
+                  Gtk.Label(label="Biografía:"), self.textView]:
             box.pack_start(w, True, True, 0)
         self.show_all()
 
@@ -32,8 +32,8 @@ class DialogoAutor(Gtk.Dialog):
         """
         Recupera la información introducida en los campos del formulario.
         """
-        b = self.tv.get_buffer()
-        return (self.en.get_text(), self.ena.get_text(), b.get_text(b.get_start_iter(), b.get_end_iter(), True))
+        buffer = self.textView.get_buffer()
+        return (self.entry.get_text(), self.entry2.get_text(), buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), True))
 
 
 class VentanaAutores(Gtk.Window):
@@ -58,30 +58,30 @@ class VentanaAutores(Gtk.Window):
         for i, c in enumerate(["ID", "Nombre", "Nacionalidad", "Biografía"]):
             self.tree.append_column(Gtk.TreeViewColumn(c, Gtk.CellRendererText(), text=i))
 
-        sc = Gtk.ScrolledWindow()
-        sc.add(self.tree)
-        vbox.pack_start(sc, True, True, 0)
+        scrolledWindow = Gtk.ScrolledWindow()
+        scrolledWindow.add(self.tree)
+        vbox.pack_start(scrolledWindow, True, True, 0)
 
-        hb = Gtk.ButtonBox(spacing=10)
-        self.btn_add = Gtk.Button(label="Añadir")
-        self.btn_edit = Gtk.Button(label="Editar")
-        self.btn_del = Gtk.Button(label="Eliminar")
-        btn_v = Gtk.Button(label="Volver")
+        boxButton = Gtk.ButtonBox(spacing=10)
+        self.btnAnadir = Gtk.Button(label="Añadir")
+        self.btnEditar = Gtk.Button(label="Editar")
+        self.btnBorrar = Gtk.Button(label="Eliminar")
+        btnVolver = Gtk.Button(label="Volver")
 
         # Configuración inicial de sensibilidad
-        self.btn_edit.set_sensitive(False)
-        self.btn_del.set_sensitive(False)
+        self.btnEditar.set_sensitive(False)
+        self.btnBorrar.set_sensitive(False)
 
         seleccion = self.tree.get_selection()
         seleccion.connect("changed", self.on_seleccion_cambiada)
 
-        for b in [self.btn_add, self.btn_edit, self.btn_del, btn_v]: hb.add(b)
-        vbox.pack_start(hb, False, False, 0)
+        for b in [self.btnAnadir, self.btnEditar, self.btnBorrar, btnVolver]: boxButton.add(b)
+        vbox.pack_start(boxButton, False, False, 0)
 
-        self.btn_add.connect("clicked", self.on_add_clicked)
-        self.btn_edit.connect("clicked", self.on_edit_clicked)
-        self.btn_del.connect("clicked", self.on_delete_clicked)
-        btn_v.connect("clicked", self.on_volver_clicked)
+        self.btnAnadir.connect("clicked", self.on_add_clicked)
+        self.btnEditar.connect("clicked", self.on_edit_clicked)
+        self.btnBorrar.connect("clicked", self.on_delete_clicked)
+        btnVolver.connect("clicked", self.on_volver_clicked)
 
         self.show_all()
         self.hide()
@@ -194,5 +194,5 @@ class VentanaAutores(Gtk.Window):
         """
         modelo, iterador = seleccion.get_selected()
         hay_seleccion = iterador is not None
-        self.btn_edit.set_sensitive(hay_seleccion)
-        self.btn_del.set_sensitive(hay_seleccion)
+        self.btnEditar.set_sensitive(hay_seleccion)
+        self.btnBorrar.set_sensitive(hay_seleccion)
