@@ -3,26 +3,14 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-
 class DialogoAutor(Gtk.Dialog):
     """
-    Ventana de diálogo modal para la creación y edición de autores.
-
-    Esta clase genera un formulario con campos para el nombre, nacionalidad
-    y biografía de un autor.
+    Ventana modelo para la inserción de datos Autor
     """
 
     def __init__(self, parent, titulo, nombre="", nac="", bio=""):
         """
         Inicializa el diálogo de autor.
-
-        :param parent: Ventana que actúa como padre del diálogo.
-        :type parent: Gtk.Window
-        :param titulo: Título de la ventana del diálogo.
-        :type titulo: str
-        :param nombre: Nombre predefinido (para edición), por defecto "".
-        :param nac: Nacionalidad predefinida (para edición), por defecto "".
-        :param bio: Biografía predefinida (para edición), por defecto "".
         """
         super().__init__(title=titulo, transient_for=parent, flags=0)
         self.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
@@ -43,9 +31,6 @@ class DialogoAutor(Gtk.Dialog):
     def get_datos(self):
         """
         Recupera la información introducida en los campos del formulario.
-
-        :return: Tupla con el nombre, nacionalidad y contenido del búfer de texto.
-        :rtype: tuple
         """
         b = self.tv.get_buffer()
         return (self.en.get_text(), self.ena.get_text(), b.get_text(b.get_start_iter(), b.get_end_iter(), True))
@@ -53,20 +38,12 @@ class DialogoAutor(Gtk.Dialog):
 
 class VentanaAutores(Gtk.Window):
     """
-    Ventana encargada de la gestión integral de autores.
-
-    Permite listar autores mediante un TreeView, añadirlos, editarlos
-    y eliminarlos con confirmación previa.
+    Ventana encargada de la gestión de autores
     """
 
     def __init__(self, db, main_win):
         """
         Inicializa la ventana de gestión de autores.
-
-        :param db: Instancia de conexión a la base de datos.
-        :type db: ConexionBD
-        :param main_win: Referencia a la ventana principal para la navegación.
-        :type main_win: VentanaSeleccion
         """
         super().__init__(title="Gestión de Autores")
         self.db, self.main_win = db, main_win
@@ -120,9 +97,6 @@ class VentanaAutores(Gtk.Window):
     def on_add_clicked(self, w):
         """
         Gestiona la lógica para añadir un nuevo autor.
-
-        Mantiene el diálogo abierto mediante un bucle hasta que la validación sea
-        correcta o el usuario cancele la operación.
         """
         d = DialogoAutor(self, "Nuevo Autor")
 
@@ -189,9 +163,6 @@ class VentanaAutores(Gtk.Window):
     def mostrar_error(self, mensaje):
         """
         Muestra un diálogo de error con un mensaje personalizado.
-
-        :param mensaje: Texto que se mostrará en el cuerpo del error.
-        :type mensaje: str
         """
         dialogo = Gtk.MessageDialog(transient_for=self, flags=0, message_type=Gtk.MessageType.ERROR,
                                     buttons=Gtk.ButtonsType.OK, text="Error en los datos")

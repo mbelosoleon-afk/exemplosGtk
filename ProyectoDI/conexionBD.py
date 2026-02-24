@@ -5,16 +5,12 @@ class ConexionBD:
     """
     Clase para gestionar la conexión y operaciones CRUD en una base de datos SQLite.
 
-    Esta clase está orientada a la gestión de una biblioteca, manejando las tablas
-    de libros y sus autores, asegurando la integridad referencial mediante claves foráneas.
+    Gestión de una biblioteca
     """
 
     def __init__(self, rutaBd):
         """
         Inicializa las propiedades de la conexión.
-
-        :param rutaBd: Ruta física o nombre del archivo de la base de datos (ej: 'biblioteca.db').
-        :type rutaBd: str
         """
         self.rutaBd = rutaBd
         self.conexion = None
@@ -51,7 +47,7 @@ class ConexionBD:
 
     def crearTablas(self):
         """
-        Crea las tablas 'autores' y 'libros' estableciendo una relación 1:N.
+        Crea las tablas 'autores' y 'libros'.
 
         Un autor puede tener muchos libros, pero un libro pertenece a un solo autor.
         La tabla libros incluye restricciones de validación para la puntuación.
@@ -80,8 +76,8 @@ class ConexionBD:
             self.cursor.execute(sql_autores)
             self.cursor.execute(sql_libros)
 
-            # --- Insertar autor por defecto ---
-            # Comprobamos si hay algún autor en la tabla
+            #Insertamos un autor predeterminado
+            #Comprobamos si hay algún autor en la tabla
             self.cursor.execute("SELECT COUNT(*) FROM autores")
             cantidad = self.cursor.fetchone()[0]
 
@@ -99,11 +95,6 @@ class ConexionBD:
     def consultaSenParametros(self, consultaSQL):
         """
         Ejecuta una consulta SQL de selección sin parámetros.
-
-        :param consultaSQL: Sentencia SQL (SELECT) a ejecutar.
-        :type consultaSQL: str
-        :return: Lista de tuplas con los registros resultantes.
-        :rtype: list
         """
         try:
             self.cursor.execute(consultaSQL)
@@ -115,12 +106,6 @@ class ConexionBD:
     def consultaConParametros(self, consultaSQL, *parametros):
         """
         Ejecuta una consulta SQL de selección utilizando parámetros de seguridad.
-
-        :param consultaSQL: Sentencia SQL con marcadores de posición '?'.
-        :type consultaSQL: str
-        :param parametros: Valores para filtrar la consulta.
-        :return: Lista de tuplas con los resultados filtrados.
-        :rtype: list
         """
         try:
             self.cursor.execute(consultaSQL, parametros)
@@ -132,10 +117,6 @@ class ConexionBD:
     def engadeRexistro(self, insertSQL, *parametros):
         """
         Inserta un nuevo registro (Libro o Autor) en la base de datos.
-
-        :param insertSQL: Sentencia INSERT con marcadores '?'.
-        :type insertSQL: str
-        :param parametros: Datos del registro a insertar.
         """
         try:
             self.cursor.execute(insertSQL, parametros)
@@ -147,10 +128,6 @@ class ConexionBD:
     def actualizaRexistro(self, updateSQL, *parametros):
         """
         Actualiza un registro existente mediante su ID.
-
-        :param updateSQL: Sentencia UPDATE con marcadores '?'.
-        :type updateSQL: str
-        :param parametros: Nuevos valores incluyendo el ID al final para la cláusula WHERE.
         """
         try:
             self.cursor.execute(updateSQL, parametros)
@@ -165,10 +142,6 @@ class ConexionBD:
 
         Si se borra un autor, se borrarán sus libros en cascada automáticamente
         gracias a la configuración de la clave foránea.
-
-        :param borraSQL: Sentencia DELETE con marcador para el ID.
-        :type borraSQL: str
-        :param parametros: ID del registro a eliminar.
         """
         try:
             self.cursor.execute(borraSQL, parametros)
