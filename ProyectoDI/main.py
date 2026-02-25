@@ -3,7 +3,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from ProyectoDI.conexionBD import ConexionBD
-from ProyectoDI.ventanaSeleccion import VentanaSeleccion
+from ProyectoDI.ventanaPrincipal import VentanaSeleccion
 
 class Main:
     """
@@ -14,7 +14,6 @@ class Main:
         """
         Inicializa la instancia de la aplicación.
         """
-        #Obtener la ruta absoluta de la carpeta donde está este archivo main.py
         rutaDirectorio = os.path.dirname(os.path.abspath(__file__))
         rutaDb = os.path.join(rutaDirectorio, "biblioteca.db")
 

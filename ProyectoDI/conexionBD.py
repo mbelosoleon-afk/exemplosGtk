@@ -77,7 +77,7 @@ class ConexionBD:
             cantidad = self.cursor.fetchone()[0]
 
             if cantidad == 0:
-                autor_defecto = ("Autor Desconocido", "N/A", "Autor creado por el sistema.")
+                autor_defecto = ("Autor por defecto", "N/A", "Autor creado por el sistema.")
                 self.cursor.execute("INSERT INTO autores (nombre, nacionalidad, biografia) VALUES (?, ?, ?)",
                                     autor_defecto)
                 print("Autor por defecto creado correctamente.")

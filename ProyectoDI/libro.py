@@ -21,10 +21,10 @@ class DialogoLibro(Gtk.Dialog):
         box = self.get_content_area()
         box.set_spacing(10)
 
-        # --- Entradas de datos ---
+        #Entradas de datos
         self.entry = Gtk.Entry(placeholder_text="Título del libro")
 
-        # ComboBox para Autores
+        #ComboBox para Autores
         self.listAutor = Gtk.ListStore(int, str) #id, nombre
         self.comboAutor = Gtk.ComboBox(model=self.listAutor)
         renderer = Gtk.CellRendererText() #Objeto para "dibujar"
