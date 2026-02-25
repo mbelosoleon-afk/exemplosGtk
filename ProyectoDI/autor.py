@@ -88,7 +88,7 @@ class VentanaAutores(Gtk.Window):
 
     def actualizar_listado(self):
         """
-        Consulta la base de datos y refresca el contenido del TreeView.
+        Sincronizar el modelo real con la base de datos
         """
         self.modelo.clear()
         for f in self.db.consultaSenParametros("SELECT * FROM autores"):
@@ -96,7 +96,7 @@ class VentanaAutores(Gtk.Window):
 
     def on_add_clicked(self, w):
         """
-        Gestiona la lógica para añadir un nuevo autor.
+        Añadir un nuevo libro
         """
         d = DialogoAutor(self, "Nuevo Autor")
 
@@ -117,9 +117,7 @@ class VentanaAutores(Gtk.Window):
 
     def on_edit_clicked(self, w):
         """
-        Gestiona la edición de un autor seleccionado.
-
-        Valida que los campos obligatorios no se dejen vacíos durante la edición.
+        Edición de un libro ya existente
         """
         mod, it = self.tree.get_selection().get_selected()
         if it:
@@ -144,9 +142,7 @@ class VentanaAutores(Gtk.Window):
 
     def on_delete_clicked(self, w):
         """
-        Gestiona la eliminación de un autor tras confirmación del usuario.
-
-        Muestra un diálogo de advertencia informando sobre el borrado en cascada.
+        Borrado de un libro ya existente
         """
         mod, it = self.tree.get_selection().get_selected()
         if it:
@@ -162,7 +158,7 @@ class VentanaAutores(Gtk.Window):
 
     def mostrar_error(self, mensaje):
         """
-        Muestra un diálogo de error con un mensaje personalizado.
+        Lanza un cuadro de diálogo de advertencia.
         """
         dialogo = Gtk.MessageDialog(transient_for=self, flags=0, message_type=Gtk.MessageType.ERROR,
                                     buttons=Gtk.ButtonsType.OK, text="Error en los datos")
@@ -172,25 +168,21 @@ class VentanaAutores(Gtk.Window):
 
     def on_delete_event(self, w, e):
         """
-        Intervención del evento de cierre de ventana (botón X).
-
-        Impide la destrucción del objeto y vuelve al menú principal.
+        Gestiona el cierre de la ventana.
         """
         self.on_volver_clicked()
         return True
 
     def on_volver_clicked(self, w=None):
         """
-        Oculta la ventana actual y muestra la ventana principal.
+        Oculta la ventana de libros y regresa al menú principal.
         """
         self.hide()
         self.main_win.show()
 
     def on_seleccion_cambiada(self, seleccion):
         """
-        Controlador de la señal 'changed' de la selección del TreeView.
-
-        Habilita o deshabilita los botones Editar y Eliminar según la selección.
+        Actualiza la sensibilidad de los botones según la selección actual del TreeView.
         """
         modelo, iterador = seleccion.get_selected()
         hay_seleccion = iterador is not None

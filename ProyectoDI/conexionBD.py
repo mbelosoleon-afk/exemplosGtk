@@ -19,9 +19,6 @@ class ConexionBD:
     def conectaBD(self):
         """
         Crea la conexión con la base de datos SQLite y habilita el soporte para claves foráneas.
-
-        Utiliza el comando PRAGMA para asegurar que las relaciones ON DELETE CASCADE
-        funcionen correctamente en el motor SQLite.
         """
         try:
             if self.conexion is None:
@@ -35,8 +32,6 @@ class ConexionBD:
     def creaCursor(self):
         """
         Crea el objeto cursor necesario para ejecutar sentencias SQL.
-
-        Requiere que la conexión haya sido establecida previamente mediante conectaBD().
         """
         try:
             if self.conexion and self.cursor is None:
@@ -47,7 +42,7 @@ class ConexionBD:
 
     def crearTablas(self):
         """
-        Crea las tablas 'autores' y 'libros'.
+        Crea las tablas autores y libros.
         """
         sql_autores = """
         CREATE TABLE IF NOT EXISTS autores (
@@ -71,13 +66,11 @@ class ConexionBD:
             self.cursor.execute(sql_autores)
             self.cursor.execute(sql_libros)
 
-            #Insertamos un autor predeterminado
-            #Comprobamos si hay algún autor en la tabla
             self.cursor.execute("SELECT COUNT(*) FROM autores")
             cantidad = self.cursor.fetchone()[0]
 
             if cantidad == 0:
-                autor_defecto = ("Autor por defecto", "N/A", "Autor creado por el sistema.")
+                autor_defecto = ("Autor por defecto", "Sin definir", "Autor creado por el sistema.")
                 self.cursor.execute("INSERT INTO autores (nombre, nacionalidad, biografia) VALUES (?, ?, ?)",
                                     autor_defecto)
                 print("Autor por defecto creado correctamente.")
@@ -89,7 +82,7 @@ class ConexionBD:
 
     def consultaSenParametros(self, consultaSQL):
         """
-        Ejecuta una consulta SQL de selección sin parámetros.
+        Ejecuta una consulta sin parámetros
         """
         try:
             self.cursor.execute(consultaSQL)
@@ -100,7 +93,7 @@ class ConexionBD:
 
     def consultaConParametros(self, consultaSQL, *parametros):
         """
-        Ejecuta una consulta SQL de selección utilizando parámetros de seguridad.
+        Ejecuta una consulta con parámetros
         """
         try:
             self.cursor.execute(consultaSQL, parametros)
@@ -111,7 +104,7 @@ class ConexionBD:
 
     def engadeRexistro(self, insertSQL, *parametros):
         """
-        Inserta un nuevo registro (Libro o Autor) en la base de datos.
+        Inserta un nuevo registro en la base de datos
         """
         try:
             self.cursor.execute(insertSQL, parametros)
@@ -122,7 +115,7 @@ class ConexionBD:
 
     def actualizaRexistro(self, updateSQL, *parametros):
         """
-        Actualiza un registro existente mediante su ID.
+        Actualiza un registro de la base de datos
         """
         try:
             self.cursor.execute(updateSQL, parametros)
@@ -134,9 +127,6 @@ class ConexionBD:
     def borraRexistro(self, borraSQL, *parametros):
         """
         Elimina un registro de la base de datos.
-
-        Si se borra un autor, se borrarán sus libros en cascada automáticamente
-        gracias a la configuración de la clave foránea.
         """
         try:
             self.cursor.execute(borraSQL, parametros)

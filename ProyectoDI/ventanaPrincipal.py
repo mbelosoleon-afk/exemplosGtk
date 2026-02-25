@@ -64,7 +64,7 @@ class VentanaSeleccion(Gtk.Window):
 
         btn = Gtk.Button()
         btn.add(box)
-        btn.set_size_request(-1, 50)  # Altura mínima para que se vea más moderno
+        btn.set_size_request(-1, 50)  #Altura mínima para que se vea más moderno
         return btn
 
     def aplicar_estilo(self):
