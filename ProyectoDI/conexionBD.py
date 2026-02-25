@@ -4,8 +4,6 @@ import sqlite3 as dbapi
 class ConexionBD:
     """
     Clase para gestionar la conexión y operaciones CRUD en una base de datos SQLite.
-
-    Gestión de una biblioteca
     """
 
     def __init__(self, rutaBd):

@@ -29,8 +29,7 @@ class Main:
 
     def ejecutar(self):
         """
-        Mantiene la aplicación en ejecución hasta que el usuario cierre
-        la ventana principal
+        Mantiene la aplicación en ejecución
         """
         Gtk.main()
 
