@@ -20,7 +20,7 @@ class VentanaSeleccion(Gtk.Window):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         self.add(vbox)
 
-        #Header personalizado (opcional, podrías usar Gtk.HeaderBar)
+        #Header personalizado
         header = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
         header.set_name("header-box")  # ID para CSS
         lbl_titulo = Gtk.Label(label="<b>BIBLIOTECA</b>")
